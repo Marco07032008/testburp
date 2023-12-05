@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #login-container {
+      text-align: center;
+      border: 1px solid #ccc;
+      padding: 20px;
+      max-width: 300px;
+      width: 100%;
+    }
+    #password-container {
+      position: relative;
+      margin-bottom: 10px;
+    }
+    #password-toggle {
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div id="login-container">
+  <h2>Login</h2>
+  <form onsubmit="validateLogin(event)">
+    <label for="username">Username:</label>
+    <br>
+    <input type="text" id="username" name="username" required>
+    <br><br>
+    <label for="password">Password:</label>
+    <div id="password-container">
+      <input type="password" id="password" name="password" required>
+      <span id="password-toggle" onclick="togglePasswordVisibility()">👁️</span>
+    </div>
+    <br>
+    <button type="submit">Login</button>
+  </form>
+  <p id="login-message"></p>
+</div>
+
+<script>
+  // Simulazione di un database con utenti e password
+  const database = [
+    { username: 'admin', password: '12345678' },
+    { username: 'test', password: 'test' }
+  ];
+
+  function validateLogin(event) {
+    event.preventDefault();
+
+    // Ottieni i valori di username e password
+    var enteredUsername = document.getElementById('username').value;
+    var enteredPassword = document.getElementById('password').value;
+
+    // Controlla nel database
+    var isValid = database.some(user => user.username === enteredUsername && user.password === enteredPassword);
+
+    // Verifica le credenziali
+    if (isValid) {
+      document.body.style.backgroundColor = 'black';
+      document.getElementById('login-container').style.color = 'green';
+      document.getElementById('login-message').textContent = 'Complimenti!';
+    } else {
+      document.body.style.backgroundColor = 'initial';
+      document.getElementById('login-container').style.color = 'red';
+      document.getElementById('login-message').textContent = 'Invalid username or password!';
+    }
+
+    // Ricarica la pagina
+    setTimeout(function() {
+      location.reload();
+    }, 2000);
+  }
+
+  function togglePasswordVisibility() {
+    var passwordInput = document.getElementById('password');
+    var passwordToggle = document.getElementById('password-toggle');
+
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      passwordToggle.textContent = '👁️';
+    } else {
+      passwordInput.type = 'password';
+      passwordToggle.textContent = '👁️';
+    }
+  }
+</script>
+
+</body>
+</html>
